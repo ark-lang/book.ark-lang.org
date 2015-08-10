@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>References | Introduction</title>
+        <title>Memory Allocation | Introduction</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -25,10 +25,10 @@
         
     
     
-    <link rel="next" href="./reference_lifetime.html" />
+    <link rel="next" href="./if_statements.html" />
     
     
-    <link rel="prev" href="./borrowing.html" />
+    <link rel="prev" href="./explicit_lifetimes.html" />
     
 
         
@@ -36,7 +36,7 @@
     <body>
         
         
-    <div class="book" data-level="10.2.1" data-basepath="." data-revision="Mon Aug 10 2015 20:22:39 GMT+0100 (IST)">
+    <div class="book" data-level="11" data-basepath="." data-revision="Mon Aug 10 2015 20:22:39 GMT+0100 (IST)">
     
 
 <div class="book-summary">
@@ -365,7 +365,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="10.2.1" data-path="references.html">
+        <li class="chapter " data-level="10.2.1" data-path="references.html">
             
                 
                     <a href="./references.html">
@@ -420,7 +420,7 @@
             
         </li>
     
-        <li class="chapter " data-level="11" data-path="memory_allocation.html">
+        <li class="chapter active" data-level="11" data-path="memory_allocation.html">
             
                 
                     <a href="./memory_allocation.html">
@@ -737,39 +737,34 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="references">References</h1>
+                        <h1 id="memory-allocation">Memory Allocation</h1>
 <p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
-<p>How do we solve this issue? We use something called &quot;borrowing&quot;. Instead of
-moving these values to the function, we pass a reference to these values.
-A reference has a few extra properties:</p>
-<ul>
-<li>it cannot mutate what resource it refers to</li>
-<li>it is <strong>not</strong> de-allocated at the end of scope</li>
-</ul>
-<p>A reference is denoted with an ampersand (<code>&amp;</code>), followed by the resource it
-is referring to. This means that the above example becomes the following:</p>
-<pre><code>func do_stuff(a: ^int) {
-    // do stuff with a (kind of...)
-    // remember it&apos;s not freed here because
-    // it&apos;s a reference!
-}
-
-func main() {
-    mut a: ^int = std::mem::alloc(std::mem::sizeof(^a)); // alloc
-    do_stuff(&amp;a); // no re-assignments necessary
-    ^a = 21; // yay, it works!
-}
-</code></pre><p>And all should work well! However, note my little comment &quot;do stuff with a (kind of...)&quot;. I say &quot;kind of&quot; because we are passing a reference, and if you
-remember one of the properties of a reference is that you cannot mutate the
-resource that it is borrowing or refers to.</p>
-<p>To work around this, we can use a &quot;mutable reference&quot;, denoted in a similar manner to
-immutable references, except we put the <code>mut</code> keyword after the ampersand,
-like so: <code>&amp;mut T</code>. This gives us the ability to &quot;mutate&quot; the memory that we pass a reference to.</p>
-<p>However, there are a few rules with regards to mutable references:</p>
-<ul>
-<li>you can have <strong>only one</strong> mutable reference to a resource at a time</li>
-<li>you can have N number of immutable references</li>
-</ul>
+<p>Memory allocation is handled in the standard library, there are a few functions
+used for allocating memory, namely <code>alloc</code>, <code>alloc_raw</code>, <code>sizeof</code>, and <code>dealloc</code>.</p>
+<h2 id="-alloc"><code>alloc</code></h2>
+<p>The <code>alloc</code> function takes a generic type <code>T</code>, and no arguments This function
+will allocate enough memory to store the size of the generic type you pass in.
+The <code>alloc</code> function returns a pointer to the memory block that it allocates as the type <code>T</code>.</p>
+<pre><code>foo: ^int = std::mem::alloc&lt;int&gt;();
+</code></pre><h2 id="-alloc-raw"><code>alloc_raw</code></h2>
+<p>The <code>alloc_raw</code> function will allocate raw memory, it takes the amount of memory to
+allocate as an unsigned integer. Like the <code>alloc</code> function, the <code>alloc_raw</code> function
+will also return a pointer of bytes to the memory block that it allocates.</p>
+<pre><code>foo: ^u8 = std::mem::alloc_raw(256);
+</code></pre><h2 id="-sizeof"><code>sizeof</code></h2>
+<p><code>sizeof</code> is an expression that will get the size of the given type <code>T</code> or expression
+<code>E</code>. Since <code>alloc</code> handles memory allocation for types for you, we suggest not using
+this in pair with <code>alloc_raw</code>. However, it is available for when you need the size
+of an expression or type.</p>
+<pre><code>foo: ^u8 = std::mem::alloc(std::mem::sizeof(int) + std::mem::sizeof(f64));
+</code></pre><h2 id="-dealloc"><code>dealloc</code></h2>
+<p><code>dealloc</code> will de-allocate the memory that is given to it, this must be called after
+allocating any memory, otherwise you will get a memory leak. Note that you should
+<em>not</em> use this on memory that isn&apos;t stored on the heap. The <code>dealloc</code> function takes
+a pointer to the memory that it should deallocate.</p>
+<pre><code>x: ^int = std::mem::alloc&lt;int&gt;();
+defer std::mem::dealloc(x);
+</code></pre><p>In the example above we defer, which means that at the end of scope, call dealloc on <code>x</code>. The defer expression is very handy with resource allocation.</p>
 
                     
                     </section>
@@ -780,10 +775,10 @@ like so: <code>&amp;mut T</code>. This gives us the ability to &quot;mutate&quot
         </div>
 
         
-        <a href="./borrowing.html" class="navigation navigation-prev " aria-label="Previous page: Borrowing"><i class="fa fa-angle-left"></i></a>
+        <a href="./explicit_lifetimes.html" class="navigation navigation-prev " aria-label="Previous page: Explicit Lifetimes"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./reference_lifetime.html" class="navigation navigation-next " aria-label="Next page: Reference Lifetime"><i class="fa fa-angle-right"></i></a>
+        <a href="./if_statements.html" class="navigation navigation-next " aria-label="Next page: If Statements"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

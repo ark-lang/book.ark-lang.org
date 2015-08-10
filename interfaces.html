@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>References | Introduction</title>
+        <title>Interfaces | Introduction</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -25,10 +25,10 @@
         
     
     
-    <link rel="next" href="./reference_lifetime.html" />
+    <link rel="next" href="./functions.html" />
     
     
-    <link rel="prev" href="./borrowing.html" />
+    <link rel="prev" href="./option_types.html" />
     
 
         
@@ -36,7 +36,7 @@
     <body>
         
         
-    <div class="book" data-level="10.2.1" data-basepath="." data-revision="Mon Aug 10 2015 20:22:39 GMT+0100 (IST)">
+    <div class="book" data-level="3.6" data-basepath="." data-revision="Mon Aug 10 2015 20:22:39 GMT+0100 (IST)">
     
 
 <div class="book-summary">
@@ -187,7 +187,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="interfaces.html">
+        <li class="chapter active" data-level="3.6" data-path="interfaces.html">
             
                 
                     <a href="./interfaces.html">
@@ -365,7 +365,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="10.2.1" data-path="references.html">
+        <li class="chapter " data-level="10.2.1" data-path="references.html">
             
                 
                     <a href="./references.html">
@@ -737,40 +737,70 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="references">References</h1>
-<p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
-<p>How do we solve this issue? We use something called &quot;borrowing&quot;. Instead of
-moving these values to the function, we pass a reference to these values.
-A reference has a few extra properties:</p>
-<ul>
-<li>it cannot mutate what resource it refers to</li>
-<li>it is <strong>not</strong> de-allocated at the end of scope</li>
-</ul>
-<p>A reference is denoted with an ampersand (<code>&amp;</code>), followed by the resource it
-is referring to. This means that the above example becomes the following:</p>
-<pre><code>func do_stuff(a: ^int) {
-    // do stuff with a (kind of...)
-    // remember it&apos;s not freed here because
-    // it&apos;s a reference!
+                        <h1 id="interfaces">Interfaces</h1>
+<p><img src="Badge_Planned.svg" alt="Feature Planned"></p>
+<p>Interfaces are named collections of method signatures. In Ark, interfaces are implicit,
+which means that if something has the methods defined in an interface <code>A</code>, it will
+implicitly implement interface <code>A</code>. This allows for duck typing, or in
+other words: </p>
+<blockquote>
+<p>If it looks like a duck, and quacks like a duck, it&apos;s a duck&quot;</p>
+</blockquote>
+<p>The <code>interface</code> keyword, followed by a block that consists of method signatures
+will denote an interface. Method signatures defined in an interface do not 
+need to specify the <code>func</code> keyword.</p>
+<pre><code>type Geometry interface {
+    area() -&gt; f64;
+    perimeter() -&gt; f64;
+};
+</code></pre><p>Now if we introduce some structures that implement the same methods in the interface
+we defined, they will implement <code>Geometry</code> implicitly.</p>
+<pre><code>type Rectangle struct {
+    width: f64,
+    height: f64,
+};
+
+type Circle struct {
+    radius: f64,
+};
+
+func (r: rect) area() -&gt; f64 {
+    return r.width * r.height;
 }
 
-func main() {
-    mut a: ^int = std::mem::alloc(std::mem::sizeof(^a)); // alloc
-    do_stuff(&amp;a); // no re-assignments necessary
-    ^a = 21; // yay, it works!
+func (r: rect) perimeter() -&gt; f64 {
+    return (r.width * 2) * (r.height * 2);
 }
-</code></pre><p>And all should work well! However, note my little comment &quot;do stuff with a (kind of...)&quot;. I say &quot;kind of&quot; because we are passing a reference, and if you
-remember one of the properties of a reference is that you cannot mutate the
-resource that it is borrowing or refers to.</p>
-<p>To work around this, we can use a &quot;mutable reference&quot;, denoted in a similar manner to
-immutable references, except we put the <code>mut</code> keyword after the ampersand,
-like so: <code>&amp;mut T</code>. This gives us the ability to &quot;mutate&quot; the memory that we pass a reference to.</p>
-<p>However, there are a few rules with regards to mutable references:</p>
-<ul>
-<li>you can have <strong>only one</strong> mutable reference to a resource at a time</li>
-<li>you can have N number of immutable references</li>
-</ul>
 
+// NOTE std::math::PI as of writing this doesn&apos;t exist
+// in this context it&apos;s more for an example sake
+// but I&apos;m sure you know what PI means in this context
+
+func (c: circle) area() -&gt; f64 {
+    return std::math::PI * c.radius * c.radius;
+}
+
+func (c: circle) perimeter() -&gt; f64 {
+    return 2 * std::math::PI * c.radius;
+}
+</code></pre><p>We can make a generic function that takes any type that implements our Geometry interface:</p>
+<pre><code>func calculate(g: Geometry) {
+    C::printf(&quot;area %f, perim %f \n&quot;, g.area(), g.perimeter());
+}
+
+func main() -&gt; int {
+    r := Rect { 
+        width: 3, height: 4
+    };
+
+    c := Circle {
+        radius: 5,
+    };
+
+    calculate(r);
+    calculate(c);
+}
+</code></pre>
                     
                     </section>
                 
@@ -780,10 +810,10 @@ like so: <code>&amp;mut T</code>. This gives us the ability to &quot;mutate&quot
         </div>
 
         
-        <a href="./borrowing.html" class="navigation navigation-prev " aria-label="Previous page: Borrowing"><i class="fa fa-angle-left"></i></a>
+        <a href="./option_types.html" class="navigation navigation-prev " aria-label="Previous page: Option Types"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./reference_lifetime.html" class="navigation navigation-next " aria-label="Next page: Reference Lifetime"><i class="fa fa-angle-right"></i></a>
+        <a href="./functions.html" class="navigation navigation-next " aria-label="Next page: Functions"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

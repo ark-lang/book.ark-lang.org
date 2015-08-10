@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>References | Introduction</title>
+        <title>Operator Overloading | Introduction</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -25,10 +25,8 @@
         
     
     
-    <link rel="next" href="./reference_lifetime.html" />
     
-    
-    <link rel="prev" href="./borrowing.html" />
+    <link rel="prev" href="./type_restrictions.html" />
     
 
         
@@ -36,7 +34,7 @@
     <body>
         
         
-    <div class="book" data-level="10.2.1" data-basepath="." data-revision="Mon Aug 10 2015 20:22:39 GMT+0100 (IST)">
+    <div class="book" data-level="15" data-basepath="." data-revision="Mon Aug 10 2015 20:22:39 GMT+0100 (IST)">
     
 
 <div class="book-summary">
@@ -365,7 +363,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="10.2.1" data-path="references.html">
+        <li class="chapter " data-level="10.2.1" data-path="references.html">
             
                 
                     <a href="./references.html">
@@ -617,7 +615,7 @@
             
         </li>
     
-        <li class="chapter " data-level="15" data-path="operator_overloading.html">
+        <li class="chapter active" data-level="15" data-path="operator_overloading.html">
             
                 
                     <a href="./operator_overloading.html">
@@ -737,40 +735,40 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="references">References</h1>
-<p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
-<p>How do we solve this issue? We use something called &quot;borrowing&quot;. Instead of
-moving these values to the function, we pass a reference to these values.
-A reference has a few extra properties:</p>
+                        <h1 id="operator-overloading">Operator Overloading</h1>
+<p><img src="Badge_Planned.svg" alt="Feature Planned"></p>
+<p>Ark allows operator overloading, however there are a few restrictions enforced 
+for safety. You can overload the following operators:</p>
 <ul>
-<li>it cannot mutate what resource it refers to</li>
-<li>it is <strong>not</strong> de-allocated at the end of scope</li>
+<li><code>+</code> =&gt; addition</li>
+<li><code>-</code> =&gt; subtraction</li>
+<li><code>/</code> =&gt; division</li>
+<li><code>*</code> =&gt; multiplication</li>
+<li><code>%</code> =&gt; modulo</li>
 </ul>
-<p>A reference is denoted with an ampersand (<code>&amp;</code>), followed by the resource it
-is referring to. This means that the above example becomes the following:</p>
-<pre><code>func do_stuff(a: ^int) {
-    // do stuff with a (kind of...)
-    // remember it&apos;s not freed here because
-    // it&apos;s a reference!
+<p>The <code>operator</code> keyword, followed by the operator to overload, a set of parameters
+and a return type denote an operator overload. This syntax is very similar to a
+function, however the <code>operator</code> keyword is used in replace of <code>func</code>, and the symbol
+to overload in replace of a function name.</p>
+<pre><code>operator +(a: Vector2, b: Vector2) -&gt; Vector2 {
+    ...
+}
+</code></pre><p>By default operator implementations are unordered, for example:</p>
+<pre><code>operator *(a: Vector2, b: f32) -&gt; Vector2 {
+    ...
+}
+</code></pre><p>This will allow both <code>Vector2 * f32</code> and <code>f32 * Vector2</code>. You can force an operator
+overload to be ordered using the <code>ordered</code> attribute:</p>
+<pre><code>[ordered]
+operator *(a: Vector2, b: f32) -&gt; Vector2 {
+    ...
 }
 
-func main() {
-    mut a: ^int = std::mem::alloc(std::mem::sizeof(^a)); // alloc
-    do_stuff(&amp;a); // no re-assignments necessary
-    ^a = 21; // yay, it works!
+[ordered]
+operator *(a: f32, b: Vector2) -&gt; Vector2 { 
+    ... 
 }
-</code></pre><p>And all should work well! However, note my little comment &quot;do stuff with a (kind of...)&quot;. I say &quot;kind of&quot; because we are passing a reference, and if you
-remember one of the properties of a reference is that you cannot mutate the
-resource that it is borrowing or refers to.</p>
-<p>To work around this, we can use a &quot;mutable reference&quot;, denoted in a similar manner to
-immutable references, except we put the <code>mut</code> keyword after the ampersand,
-like so: <code>&amp;mut T</code>. This gives us the ability to &quot;mutate&quot; the memory that we pass a reference to.</p>
-<p>However, there are a few rules with regards to mutable references:</p>
-<ul>
-<li>you can have <strong>only one</strong> mutable reference to a resource at a time</li>
-<li>you can have N number of immutable references</li>
-</ul>
-
+</code></pre>
                     
                     </section>
                 
@@ -780,10 +778,8 @@ like so: <code>&amp;mut T</code>. This gives us the ability to &quot;mutate&quot
         </div>
 
         
-        <a href="./borrowing.html" class="navigation navigation-prev " aria-label="Previous page: Borrowing"><i class="fa fa-angle-left"></i></a>
+        <a href="./type_restrictions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Type Restrictions"><i class="fa fa-angle-left"></i></a>
         
-        
-        <a href="./reference_lifetime.html" class="navigation navigation-next " aria-label="Next page: Reference Lifetime"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
