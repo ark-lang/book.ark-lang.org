@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Defer | Introduction</title>
+        <title>Identifiers | Introduction</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -25,10 +25,10 @@
         
     
     
-    <link rel="next" href="./pointers.html" />
+    <link rel="next" href="./comments.html" />
     
     
-    <link rel="prev" href="./function_receivers.html" />
+    <link rel="prev" href="./literals.html" />
     
 
         
@@ -36,7 +36,7 @@
     <body>
         
         
-    <div class="book" data-level="8" data-basepath="." data-revision="Wed Aug 12 2015 00:44:58 GMT+0100 (IST)">
+    <div class="book" data-level="3" data-basepath="." data-revision="Wed Aug 12 2015 00:44:58 GMT+0100 (IST)">
     
 
 <div class="book-summary">
@@ -96,7 +96,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3" data-path="identifiers.html">
+        <li class="chapter active" data-level="3" data-path="identifiers.html">
             
                 
                     <a href="./identifiers.html">
@@ -288,7 +288,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="8" data-path="defer.html">
+        <li class="chapter " data-level="8" data-path="defer.html">
             
                 
                     <a href="./defer.html">
@@ -782,26 +782,21 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="defer">Defer</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>Deferred statements are executed in FILO (first in last out) order, they occur
-during lexical scoping, the arguments for defer are evaluated at the defer,
-and not when the defer itself is actually executed.</p>
-<p>Defer is very handy for things like resource allocation:</p>
-<pre><code>mod std::io::file;
-
-func main() -&gt; int {
-    file: ^File = File::open(&quot;shoppinglist.txt&quot;);
-    defer file.close();
-
-    // do some stuff with file here
-    mut file_contents: str = &quot;&quot;;
-    while !file.eof() {
-        file_contents = std::string::append(file_contents, file.read_line());
-    }
-
-    // file.close() is done here.
-}
+                        <h1 id="identifiers">Identifiers</h1>
+<p>An identifier is a sequence of Unicode code points encoded in UTF-8. An
+identifier can consist of letters, digits, or underscores. However, the
+identifeir <strong>must</strong> begin with either a letter, or an underscore.</p>
+<pre><code>func 1something...          // INVALID!
+func _something...          // VALID
+func __something...         // VALID
+func 21something...         // INVALID!
+func foo_bar...             // VALID
+func __some_123123_th...    // VALID
+</code></pre><p>UTF-8 Letters are <em>allowed</em>, this means that the following identifier is
+valid:</p>
+<pre><code>func &#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;() =&gt; do_stuff(1, 2);
+</code></pre><p>And can be called like so:</p>
+<pre><code>&#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;();
 </code></pre>
                     
                     </section>
@@ -812,10 +807,10 @@ func main() -&gt; int {
         </div>
 
         
-        <a href="./function_receivers.html" class="navigation navigation-prev " aria-label="Previous page: Function Receivers"><i class="fa fa-angle-left"></i></a>
+        <a href="./literals.html" class="navigation navigation-prev " aria-label="Previous page: Literals"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./pointers.html" class="navigation navigation-next " aria-label="Next page: Pointers"><i class="fa fa-angle-right"></i></a>
+        <a href="./comments.html" class="navigation navigation-next " aria-label="Next page: Comments"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
