@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Functions | Introduction</title>
+        <title>Literals | Introduction</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -25,10 +25,10 @@
         
     
     
-    <link rel="next" href="./function_receivers.html" />
+    <link rel="next" href="./comments.html" />
     
     
-    <link rel="prev" href="./interfaces.html" />
+    <link rel="prev" href="./source.html" />
     
 
         
@@ -36,7 +36,7 @@
     <body>
         
         
-    <div class="book" data-level="6" data-basepath="." data-revision="Wed Aug 12 2015 00:42:14 GMT+0100 (IST)">
+    <div class="book" data-level="2" data-basepath="." data-revision="Wed Aug 12 2015 00:42:14 GMT+0100 (IST)">
     
 
 <div class="book-summary">
@@ -81,7 +81,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2" data-path="literals.html">
+        <li class="chapter active" data-level="2" data-path="literals.html">
             
                 
                     <a href="./literals.html">
@@ -237,7 +237,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6" data-path="functions.html">
+        <li class="chapter " data-level="6" data-path="functions.html">
             
                 
                     <a href="./functions.html">
@@ -767,112 +767,75 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="functions">Functions</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>Ark programs will have, at the least, one function; the main function.
-This is the entry point of the program, i.e. where the execution of the program
-will begin.</p>
-<pre><code>func main() -&gt; int {
-    ...
-}
-</code></pre><h2 id="declaring-functions">Declaring Functions</h2>
-<p>The <code>func</code> keyword, followed by the name of the function, a list of parameters, 
-an <em>optional</em> return value denotes a function signature. A function itself is
-a function signature, followed by a block. A pair of curly braces <code>{}</code> denote
-a block.</p>
-<pre><code>// &quot;func&quot; Iden &quot;(&quot; ParameterList &quot;)&quot; [ &quot;-&gt;&quot; Type ] Block;
-
-// optional return value!
-func do_stuff() {
-    // this returns nothing
-}
-
-// return value!
-func foobar() -&gt; int {
-
-}
-</code></pre><h2 id="function-parameters">Function Parameters</h2>
-<p>An identifier, followed by a colon and a Type denote a function parameter. Function
-parameters must go in the function signature, between the parenthesis after the
-functions identifier (name).</p>
-<pre><code>// Parameter = Iden &quot;:&quot; Type
-// ParameterList = { Parameter &quot;,&quot; }
-func print_value(a: int) {
-    // do stuff with a
-}
-</code></pre><p>As you can see, the syntax is almost like a variable. A parameter has a
-name, followed by a colon <code>:</code>, and a type. Yet there are differences. You 
-must specify the parameters type, and the parameter <strong>cannot</strong> have a 
-default value:</p>
-<pre><code>// note, these are examples that will ERROR!
-
-// default values!
-func add(a: int = 5, b: int = 5) { // ERROR!
-    ...
-}
-
-// no types!
-func add(a, b) { // ERROR!
-    ...
-}
-</code></pre><h2 id="function-return-types">Function Return Types</h2>
-<p>A function that has no return type specified will return nothing. The function in the
-example above returns an integer. An arrow operator <code>-&gt;</code> followed by the Type <code>T</code> to
-return specifies a return type.</p>
-<pre><code>// returns an integer
-func add(a: int) -&gt; int {
-    // return keyword specifies what to return from the function
-    return a + 1;
-}
-</code></pre><h2 id="single-line-functions">Single Line Functions</h2>
-<p>We&apos;ve introduced some syntactic sugar for single line functions, instead of
-using two curly braces to denote a block, you can use the association 
-operator  <code>=&gt;</code>:</p>
-<pre><code>func add(a: int, b: int) -&gt; int =&gt; return a + b;
-</code></pre><h2 id="function-prototypes">Function Prototypes</h2>
-<p>Function prototypes are for interoperability with C. They help the Ark compiler
-know what types a function should take that you are calling to. It also acts
-as a &quot;dummy&quot; function so that the compiler knows that you aren&apos;t calling a 
-non-existent function.</p>
-<p>A function signature, followed by a semi-colon (instead of a block) will denote
-a function prototype:</p>
-<pre><code>func function_prototype() -&gt; int;
-func function_prototype_returns_nothing();
-</code></pre><h2 id="anonymous-functions">Anonymous Functions</h2>
-<p>Functions do not have to specify a name; these are anonymous functions, i.e.
-they are not bound to a name:</p>
-<pre><code>func do_stuff(fn: func(): int) {
-    C::printf(&quot;%d\n&quot;, fn());
-}
-
-func main() -&gt; int {
-    do_stuff(func(): int { return 123; });
-    return 0;
-}
-</code></pre><p>As you can see, the first function took a function as a parameter. You can pass
-functions as first-class function pointers.This is useful when
-sorting lists, making callbacks, etc.</p>
-<h2 id="program-arguments">Program Arguments</h2>
-<p>If you need the arguments passed to your program, you can modify the main
-functions arguments to take the amount of arguments passed, and a pointer
-to the argument list:</p>
-<pre><code>[c] func printf(fmt: str, ...);
-
-func main(argc: int, argv: ^str) -&gt; int {
-    C::printf(&quot;%d %s\n&quot;, argc, ^argv);
-
-    return 0;
-}
-</code></pre><h2 id="variadic-functions">Variadic Functions</h2>
-<p>A variadic function is a function that can take a variable amount of arguments.
-An ellipses at the end of parameter list denotes a variadic function.</p>
-<pre><code>func do_stuff(a: int, ...) {
-
-}
-</code></pre><p>The above example shows a function that takes a variable amount of arguments. Note 
-that this is for interoperability with C, for instance the <code>printf</code> function. 
-This means that there is no way that you can get the arguments in Ark.</p>
-
+                        <h1 id="literals">Literals</h1>
+<p>A literal is an expression represented as a single token instead of a sequence
+of tokens.</p>
+<h2 id="number-separators">Number Separators</h2>
+<p>A very important detail is that numbers can be visually separated with the
+underscore character. Though a usage like this is valid:</p>
+<pre><code>1_0_0_0_0_0_0
+</code></pre><p>It is not a good practice. Instead, zeroes should be grouped together in a way
+that they make sense given the context. For instance, a million has 6 zeroes.
+I can group these into 3&apos;s so that I can easily tell this number is a million:</p>
+<pre><code>1_000_000
+</code></pre><p>This is valid syntax with regards to all number literals.</p>
+<h2 id="decimal">Decimal</h2>
+<p>Decimal Numbers are represented as a sequence of one or more decimals ranging 
+from &apos;0&apos; to &apos;9&apos;.</p>
+<pre><code>1234
+0123
+2222
+</code></pre><h3 id="binary">Binary</h3>
+<p>A binary literal is denoted with the <code>0b</code> prefix, followed by a sequence
+of one or more digits that can be either <code>0</code> or <code>1</code>.</p>
+<pre><code>0b1010101
+</code></pre><h3 id="hexadecimal">Hexadecimal</h3>
+<p>A hexadecimal literal is denoted with the <code>0x</code> prefix, followed by a
+sequence of one ore more digits from <code>0</code> to <code>9</code>, <code>A</code>, <code>F</code> or <code>a</code> to <code>f</code>.</p>
+<pre><code>0xdeadbeef
+0x0123abc
+0x3957;
+</code></pre><h3 id="octal">Octal</h3>
+<p>An octal literal is denoted with the <code>0o</code> prefix, followed by a sequence of
+digits ranging from <code>0</code> to <code>7</code>.</p>
+<pre><code>0o1230417
+</code></pre><h2 id="floating-numbers">Floating Numbers</h2>
+<p>Floating numbers <strong>must</strong> start with atleast a digit, they <strong>cannot</strong> start
+with a decimal. Floating numbers consist of a sequence of digits, followed by
+a decimal, and another sequence of digits:</p>
+<pre><code>1.212341234         // CORRECT
+.123123             // WRONG
+1.12341234.2341234  // WRONG
+</code></pre><h3 id="floating-number-suffixes">Floating Number Suffixes</h3>
+<p>You may suffix a number with either <code>f</code>, <code>d</code>, or <code>q</code> respectively. Floating
+suffixes are used to assist the compiler with type-inference. The suffix <code>f</code>
+denotes a single-precision binary floating-point (32 bits). The suffix <code>d</code>
+denotes a double-precision binary floating-point (64 bits). Finally, the <code>q</code> suffix denotes a quadruple-precision binary floating-point (128 bits). </p>
+<pre><code>a := 0.1f; // 32 bits
+b := 0.1d; // 64 bits
+c := 0.1q; // 128 bits
+</code></pre><h2 id="string-literals">String Literals</h2>
+<p>A string is denoted with two quotes <code>&quot;</code>. Currently, the compiler will eat 
+<em>anything</em> between the matching quotations:</p>
+<pre><code>a := &quot;this is my quote&quot;;
+</code></pre><p>Strings are UTF-8 encoded, which means the following is valid:</p>
+<pre><code>a := &quot;&#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;&quot;;
+</code></pre><h2 id="character-literals">Character Literals</h2>
+<p>A character is denoted with two single squotes <code>&apos;</code>. Character constants cannot
+be empty:</p>
+<pre><code>a := &apos;&apos;; // INVALID
+a := &apos; &apos;; // OK!
+</code></pre><p>Currently, a character will eat anything within the two single quotes, and can
+be escaped with two backslashes <code>\\</code> or a backslash followed by a tick <code>\&apos;</code>.</p>
+<h2 id="standard-form-numbers">Standard Form Numbers</h2>
+<p>Numbers can be in standard form, a standard form number is a number literal,
+followed by an upper or lowercase <code>e</code>, followed by another number literal.</p>
+<pre><code>2e3     == 2000
+2E3     == 2000
+2000e-3 == 2
+1.5e4   == 15000
+0.5e-2  == 0.005
+</code></pre>
                     
                     </section>
                 
@@ -882,10 +845,10 @@ This means that there is no way that you can get the arguments in Ark.</p>
         </div>
 
         
-        <a href="./interfaces.html" class="navigation navigation-prev " aria-label="Previous page: Interfaces"><i class="fa fa-angle-left"></i></a>
+        <a href="./source.html" class="navigation navigation-prev " aria-label="Previous page: Program Input"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./function_receivers.html" class="navigation navigation-next " aria-label="Next page: Function Receivers"><i class="fa fa-angle-right"></i></a>
+        <a href="./comments.html" class="navigation navigation-next " aria-label="Next page: Comments"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

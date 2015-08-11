@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Functions | Introduction</title>
+        <title>Program Input | Introduction</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.2.0">
@@ -25,10 +25,10 @@
         
     
     
-    <link rel="next" href="./function_receivers.html" />
+    <link rel="next" href="./literals.html" />
     
     
-    <link rel="prev" href="./interfaces.html" />
+    <link rel="prev" href="./index.html" />
     
 
         
@@ -36,7 +36,7 @@
     <body>
         
         
-    <div class="book" data-level="6" data-basepath="." data-revision="Wed Aug 12 2015 00:42:14 GMT+0100 (IST)">
+    <div class="book" data-level="1" data-basepath="." data-revision="Wed Aug 12 2015 00:42:14 GMT+0100 (IST)">
     
 
 <div class="book-summary">
@@ -66,7 +66,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1" data-path="source.html">
+        <li class="chapter active" data-level="1" data-path="source.html">
             
                 
                     <a href="./source.html">
@@ -237,7 +237,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6" data-path="functions.html">
+        <li class="chapter " data-level="6" data-path="functions.html">
             
                 
                     <a href="./functions.html">
@@ -767,111 +767,87 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="functions">Functions</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>Ark programs will have, at the least, one function; the main function.
-This is the entry point of the program, i.e. where the execution of the program
-will begin.</p>
-<pre><code>func main() -&gt; int {
-    ...
-}
-</code></pre><h2 id="declaring-functions">Declaring Functions</h2>
-<p>The <code>func</code> keyword, followed by the name of the function, a list of parameters, 
-an <em>optional</em> return value denotes a function signature. A function itself is
-a function signature, followed by a block. A pair of curly braces <code>{}</code> denote
-a block.</p>
-<pre><code>// &quot;func&quot; Iden &quot;(&quot; ParameterList &quot;)&quot; [ &quot;-&gt;&quot; Type ] Block;
-
-// optional return value!
-func do_stuff() {
-    // this returns nothing
-}
-
-// return value!
-func foobar() -&gt; int {
-
-}
-</code></pre><h2 id="function-parameters">Function Parameters</h2>
-<p>An identifier, followed by a colon and a Type denote a function parameter. Function
-parameters must go in the function signature, between the parenthesis after the
-functions identifier (name).</p>
-<pre><code>// Parameter = Iden &quot;:&quot; Type
-// ParameterList = { Parameter &quot;,&quot; }
-func print_value(a: int) {
-    // do stuff with a
-}
-</code></pre><p>As you can see, the syntax is almost like a variable. A parameter has a
-name, followed by a colon <code>:</code>, and a type. Yet there are differences. You 
-must specify the parameters type, and the parameter <strong>cannot</strong> have a 
-default value:</p>
-<pre><code>// note, these are examples that will ERROR!
-
-// default values!
-func add(a: int = 5, b: int = 5) { // ERROR!
-    ...
-}
-
-// no types!
-func add(a, b) { // ERROR!
-    ...
-}
-</code></pre><h2 id="function-return-types">Function Return Types</h2>
-<p>A function that has no return type specified will return nothing. The function in the
-example above returns an integer. An arrow operator <code>-&gt;</code> followed by the Type <code>T</code> to
-return specifies a return type.</p>
-<pre><code>// returns an integer
-func add(a: int) -&gt; int {
-    // return keyword specifies what to return from the function
-    return a + 1;
-}
-</code></pre><h2 id="single-line-functions">Single Line Functions</h2>
-<p>We&apos;ve introduced some syntactic sugar for single line functions, instead of
-using two curly braces to denote a block, you can use the association 
-operator  <code>=&gt;</code>:</p>
-<pre><code>func add(a: int, b: int) -&gt; int =&gt; return a + b;
-</code></pre><h2 id="function-prototypes">Function Prototypes</h2>
-<p>Function prototypes are for interoperability with C. They help the Ark compiler
-know what types a function should take that you are calling to. It also acts
-as a &quot;dummy&quot; function so that the compiler knows that you aren&apos;t calling a 
-non-existent function.</p>
-<p>A function signature, followed by a semi-colon (instead of a block) will denote
-a function prototype:</p>
-<pre><code>func function_prototype() -&gt; int;
-func function_prototype_returns_nothing();
-</code></pre><h2 id="anonymous-functions">Anonymous Functions</h2>
-<p>Functions do not have to specify a name; these are anonymous functions, i.e.
-they are not bound to a name:</p>
-<pre><code>func do_stuff(fn: func(): int) {
-    C::printf(&quot;%d\n&quot;, fn());
-}
-
-func main() -&gt; int {
-    do_stuff(func(): int { return 123; });
-    return 0;
-}
-</code></pre><p>As you can see, the first function took a function as a parameter. You can pass
-functions as first-class function pointers.This is useful when
-sorting lists, making callbacks, etc.</p>
-<h2 id="program-arguments">Program Arguments</h2>
-<p>If you need the arguments passed to your program, you can modify the main
-functions arguments to take the amount of arguments passed, and a pointer
-to the argument list:</p>
-<pre><code>[c] func printf(fmt: str, ...);
-
-func main(argc: int, argv: ^str) -&gt; int {
-    C::printf(&quot;%d %s\n&quot;, argc, ^argv);
-
-    return 0;
-}
-</code></pre><h2 id="variadic-functions">Variadic Functions</h2>
-<p>A variadic function is a function that can take a variable amount of arguments.
-An ellipses at the end of parameter list denotes a variadic function.</p>
-<pre><code>func do_stuff(a: int, ...) {
-
-}
-</code></pre><p>The above example shows a function that takes a variable amount of arguments. Note 
-that this is for interoperability with C, for instance the <code>printf</code> function. 
-This means that there is no way that you can get the arguments in Ark.</p>
+                        <h1 id="program-input">Program Input</h1>
+<p>We use the phrase <em>source program</em>, abbreviated <em>source</em>, to describe the
+program input to the Ark compiler. A source program is interpreted as a 
+sequence of Unicode code points encoded in UTF-8. Multiple source programs or <em>
+sources</em> can be fed to the compiler, note that this strongly ties in with the 
+module system. </p>
+<h2 id="arguments">Arguments</h2>
+<p>The ark compiler is invoked typically through a command line interface (CLI),
+with the &quot;ark&quot; command -- assuming that the ark binary is in your $PATH. </p>
+<h2 id="sub-commands">Sub Commands</h2>
+<p>The compiler allows for various sub-commands, sub-commands proceed the initial
+ark command, e.g. <code>ark &lt;sub-command&gt;</code>. For instance <code>ark build</code> will invoke
+the build sub-command.</p>
+<h3 id="-build-sub-command"><code>build</code> sub-command</h3>
+<p>This will run <em>all</em> checks on the given source program, producing a binary by
+default with the output name <code>main</code>.</p>
+<h4 id="-build-arguments"><code>build</code> arguments</h4>
+<p>These arguments are only allowed for the <code>build</code> sub-command.</p>
+<p>NOTE: the character specified in the parenthesis after the
+command is the short-flag, i.e. a shorthand flag for specifying
+the argument.</p>
+<p>Arguments <strong>must</strong> be prefixed with the double-dash, for example
+<code>--argument</code>, short arguments use a single dash, e.g. <code>-a</code>.</p>
+<h5 id="-output-o"><code>output</code> (<code>o</code>)</h5>
+<p>This argument takes a string that specifies the name of the produced
+binary. For example <code>ark build ... --output=&quot;foo&quot;</code> will produce a binary
+named &quot;foo&quot;.</p>
+<h5 id="-codegen"><code>codegen</code></h5>
+<p>This argument allows for multiple choice strings, you are currently given the 
+option to codegen to:</p>
+<ul>
+<li>llvm</li>
+</ul>
+<p>Setting this argument will generate code for the given target. For instance,
+<code>ark build ... --codegen=&quot;llvm&quot;</code> will generate code using the LLVM framework.</p>
+<h5 id="-static"><code>static</code></h5>
+<p>This is a <em>boolean</em> flag, which means that if you specify this flag, it will
+toggle a behaviour in Ark. Specifically, this argument will pass the <code>-static</code>
+option to <code>cc</code>, e.g. <code>ark build ... --static</code>.</p>
+<h5 id="-run"><code>run</code></h5>
+<p>The <code>run</code> argument will run the binary after creating it, e.g. 
+<code>ark build ... --run</code>. This is a boolean flag, therefore it takes no
+parameters. By default, this is false, i.e. it will not run the code 
+after compilation.</p>
+<h5 id="-output-type"><code>output-type</code></h5>
+<p>This argument will set the output-type, i.e. the format to produce after
+generating code, the options are:</p>
+<ul>
+<li><code>executable</code> =&gt; an executable for your platform</li>
+<li><code>assembly</code> =&gt; assembly code for your platform</li>
+<li><code>object</code> =&gt; an object file</li>
+<li><code>llvm-ir</code> =&gt; llvm intermediate representation</li>
+<li><code>llvm-bc</code> =&gt; llvm bitcode</li>
+</ul>
+<p>An example of usage would be: <code>ark build ... --output-type=&quot;assembly&quot;</code>. The
+default output type is an &quot;executable&quot;.</p>
+<h5 id="-opt-level-o"><code>opt-level</code> (<code>O</code>)</h5>
+<p>This argument sets the optimization level for LLVM, it takes an integer
+parameter from <code>0</code> to <code>4</code>, e.g. <code>ark build ... -opt-level=0</code>.</p>
+<h5 id="-ownership"><code>ownership</code></h5>
+<p>This is a <em>temporary</em> boolean flag, which will enforce ownership/borrow
+checks on the source code, e.g. <code>ark build ... --ownership</code>.</p>
+<h4 id="compiler-phases">Compiler Phases</h4>
+<p>A source program is fed to the compiler as a sequence of UTF-8 encoded unicode 
+code points, which are in turn tokenized by the lexical analyzer into a stream
+of tokens. These tokens are then parsed into a parse tree by the parser, and
+then into an Abstract Syntax Tree, abbreviated AST, by the <strong>constructor</strong>.
+After construction, the compiler will do various checks: resolution, type
+inference, and semantic analysis. Finally the AST is fed into the code
+generator, which will produce LLVM IR.</p>
+<h3 id="-docgen"><code>docgen</code></h3>
+<p>This sub-command will do the documentation generation, which will execute the 
+scan, lex, parse, and construction phases, however it <em>skips</em> code generation.
+Instead, it will generate documentation in the form of HTML (i.e. a website).</p>
+<h4 id="-docgen-arguments"><code>docgen</code> arguments</h4>
+<p>These arguments are only allowed for the <code>docgen</code> sub-command.</p>
+<h5 id="-dir"><code>dir</code></h5>
+<p>This argument specifies the output directory for the generated documentation.
+By default, the generated documentation will go in a <code>docgen/</code> folder. Example
+usage of this argument would be: <code>ark docgen ... --dir=&quot;docs&quot;</code>. In this case,
+we place the generated documentation into a directory named &quot;docs&quot;.</p>
 
                     
                     </section>
@@ -882,10 +858,10 @@ This means that there is no way that you can get the arguments in Ark.</p>
         </div>
 
         
-        <a href="./interfaces.html" class="navigation navigation-prev " aria-label="Previous page: Interfaces"><i class="fa fa-angle-left"></i></a>
+        <a href="./index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./function_receivers.html" class="navigation navigation-next " aria-label="Next page: Function Receivers"><i class="fa fa-angle-right"></i></a>
+        <a href="./literals.html" class="navigation navigation-next " aria-label="Next page: Literals"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
