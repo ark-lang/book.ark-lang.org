@@ -1,0 +1,684 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Multiple Type Parameters | Introduction</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.6.7">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="./methods_on_generic_types.html" />
+    
+    
+    <link rel="prev" href="./generics.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book"
+        data-level="16.1"
+        data-chapter-title="Multiple Type Parameters"
+        data-filepath="multiple_type_parameters.md"
+        data-basepath="."
+        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-innerlanguage="">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="./index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="source.html">
+            
+                
+                    <a href="./source.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                        Program Input
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="literals.html">
+            
+                
+                    <a href="./literals.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Literals
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="identifiers.html">
+            
+                
+                    <a href="./identifiers.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Identifiers
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="comments.html">
+            
+                
+                    <a href="./comments.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Comments
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="variables.html">
+            
+                
+                    <a href="./variables.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Variables
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="types.html">
+            
+                
+                    <a href="./types.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        Types
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1" data-path="named_types.html">
+            
+                
+                    <a href="./named_types.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.</b>
+                        
+                        Named Types
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="structures.html">
+            
+                
+                    <a href="./structures.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.2.</b>
+                        
+                        Structures
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="tuples.html">
+            
+                
+                    <a href="./tuples.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.</b>
+                        
+                        Tuples
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="enums.html">
+            
+                
+                    <a href="./enums.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.4.</b>
+                        
+                        Enums
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="option_types.html">
+            
+                
+                    <a href="./option_types.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.5.</b>
+                        
+                        Option Types
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="interfaces.html">
+            
+                
+                    <a href="./interfaces.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.6.</b>
+                        
+                        Interfaces
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="functions.html">
+            
+                
+                    <a href="./functions.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.</b>
+                        
+                        Functions
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1" data-path="function_receivers.html">
+            
+                
+                    <a href="./function_receivers.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.1.</b>
+                        
+                        Function Receivers
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="defer.html">
+            
+                
+                    <a href="./defer.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Defer
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="pointers.html">
+            
+                
+                    <a href="./pointers.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Pointers
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="arrays.html">
+            
+                
+                    <a href="./arrays.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Arrays
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="slices.html">
+            
+                
+                    <a href="./slices.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        Slices
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="12" data-path="modules.html">
+            
+                
+                    <a href="./modules.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>12.</b>
+                        
+                        Modules and Dependencies
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="13" data-path="memory_allocation.html">
+            
+                
+                    <a href="./memory_allocation.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>13.</b>
+                        
+                        Memory Allocation
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14" >
+            
+            <span><b>14.</b> Control Flow</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="14.1" data-path="if_statements.html">
+            
+                
+                    <a href="./if_statements.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.1.</b>
+                        
+                        If Statements
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14.2" data-path="for_loops.html">
+            
+                
+                    <a href="./for_loops.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.2.</b>
+                        
+                        For Loops
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14.3" data-path="destructuring.html">
+            
+                
+                    <a href="./destructuring.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.3.</b>
+                        
+                        Destructuring
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14.4" >
+            
+            <span><b>14.4.</b> Pattern Matching</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="14.4.1" data-path="match.html">
+            
+                
+                    <a href="./match.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.4.1.</b>
+                        
+                        Match
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="14.4.2" data-path="patterns.html">
+            
+                
+                    <a href="./patterns.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>14.4.2.</b>
+                        
+                        Patterns
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="15" data-path="attributes.html">
+            
+                
+                    <a href="./attributes.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>15.</b>
+                        
+                        Attributes
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16" data-path="generics.html">
+            
+                
+                    <a href="./generics.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.</b>
+                        
+                        Generics
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="16.1" data-path="multiple_type_parameters.html">
+            
+                
+                    <a href="./multiple_type_parameters.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.1.</b>
+                        
+                        Multiple Type Parameters
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16.2" data-path="methods_on_generic_types.html">
+            
+                
+                    <a href="./methods_on_generic_types.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.2.</b>
+                        
+                        Methods on Generic Types
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="16.3" data-path="type_restrictions.html">
+            
+                
+                    <a href="./type_restrictions.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>16.3.</b>
+                        
+                        Type Restrictions
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="17" data-path="operator_overloading.html">
+            
+                
+                    <a href="./operator_overloading.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>17.</b>
+                        
+                        Operator Overloading
+                    </a>
+            
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="./" >Introduction</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="multiple-type-parameters">Multiple Type Parameters</h1>
+<p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
+<p>When using generics you are not limited to one type parameter. This allows for 
+even more complicated, but often even more useful, constructs. An example of 
+using more than one type parameter could be a map:</p>
+<pre><code>type Map&lt;Key, Value&gt; struct {
+    ...
+}
+</code></pre><p>The example works exactly like you might expect. Both type parameters can be 
+used as if they were types within the body of the struct.</p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="./generics.html" class="navigation navigation-prev " aria-label="Previous page: Generics"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="./methods_on_generic_types.html" class="navigation navigation-next " aria-label="Next page: Methods on Generic Types"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="gitbook/app.js"></script>
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"highlight":{},"search":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>
