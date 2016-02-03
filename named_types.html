@@ -53,7 +53,7 @@
         data-chapter-title="Named Types"
         data-filepath="named_types.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,27 +625,21 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="named-types">Named Types</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>Names can be bound to a type, you can declare custom types, or you can alias
-existing types. </p>
-<p>The <code>type</code> keyword, followed by a name to bind it to, and the type it aliases, denotes
-a Named Type. Here are some examples:</p>
+<p>Names can be bound to a type, you can declare custom types, or you can alias existing types. A semi-colon terminates a Named Type as it is a declaration:</p>
 <pre><code>type PersonAge int;
 type PersonWeight f32;
-</code></pre><p>A semi-colon terminates a Named Type as it is a declaration. You can have
-unnamed types, i.e. you do not have to bind a type to a name:</p>
-<pre><code>something: struct {
-    a: int,
-    b: int
-};
-</code></pre><p>It&apos;s important to know that this isn&apos;t a true alias, it&apos;s a new type, which means
-that it must be cast, even if the core type is the same. For example:</p>
+</code></pre><p>Named types are type safe, they actually introduce a type into the compiler, which means you need to be consistent in casting and assigning:</p>
 <pre><code>type Foo int;
 
 a: int = 10;
 b: Foo = Foo(a); // we have to cast a to Foo.
 
 b: Foo = a; // this is not allowed.
+</code></pre><p>You can introduce anonymous types, i.e. you do not have to bind a type to a name, you can create it on the spot:</p>
+<pre><code>something: struct {
+    a: int,
+    b: int
+};
 </code></pre>
                     
                     </section>

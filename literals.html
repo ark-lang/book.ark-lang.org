@@ -53,7 +53,7 @@
         data-chapter-title="Literals"
         data-filepath="literals.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,68 +625,56 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="literals">Literals</h1>
-<p>A literal is an expression represented as a single token instead of a sequence
-of tokens.</p>
+<p>A literal is an expression represented as a single token instead of a sequence of tokens.</p>
 <h2 id="number-separators">Number Separators</h2>
-<p>A very important detail is that numbers can be visually separated with the
-underscore character. Though a usage like this is valid:</p>
-<pre><code>1_0_0_0_0_0_0
-</code></pre><p>It is not a good practice. Instead, zeroes should be grouped together in a way
-that they make sense given the context. For instance, a million has 6 zeroes.
-I can group these into 3&apos;s so that I can easily tell this number is a million:</p>
+<p>Numbers can be separated with underscores for readability:</p>
 <pre><code>1_000_000
-</code></pre><p>This is valid syntax with regards to all number literals.</p>
-<h2 id="decimal">Decimal</h2>
-<p>Decimal Numbers are represented as a sequence of one or more decimals ranging 
-from &apos;0&apos; to &apos;9&apos;.</p>
+</code></pre><h2 id="decimal">Decimal</h2>
+<p>Decimal numbers are represented as a sequence of one or more decimals ranging  from &apos;0&apos; to &apos;9&apos;.</p>
 <pre><code>1234
 0123
 2222
 </code></pre><h3 id="binary">Binary</h3>
-<p>A binary literal is denoted with the <code>0b</code> prefix, followed by a sequence
-of one or more digits that can be either <code>0</code> or <code>1</code>.</p>
+<p>A binary literal is denoted with the <code>0b</code> prefix, followed by a sequence of one or more digits that can be either <code>0</code> or <code>1</code>.</p>
 <pre><code>0b1010101
 </code></pre><h3 id="hexadecimal">Hexadecimal</h3>
-<p>A hexadecimal literal is denoted with the <code>0x</code> prefix, followed by a
-sequence of one ore more digits from <code>0</code> to <code>9</code>, <code>A</code>, <code>F</code> or <code>a</code> to <code>f</code>.</p>
+<p>A hexadecimal literal is denoted with the <code>0x</code> prefix, followed by a sequence of one ore more digits from <code>0</code> to <code>9</code>, <code>A</code>, <code>F</code> or <code>a</code> to <code>f</code>.</p>
 <pre><code>0xdeadbeef
 0x0123abc
-0x3957;
+0x3957
+0xDEADBEEF
+0xCAFEBABE
+0xBADB002
+0xbadb002
 </code></pre><h3 id="octal">Octal</h3>
-<p>An octal literal is denoted with the <code>0o</code> prefix, followed by a sequence of
-digits ranging from <code>0</code> to <code>7</code>.</p>
+<p>An octal literal is denoted with the <code>0o</code> prefix, followed by a sequence of digits ranging from <code>0</code> to <code>7</code>.</p>
 <pre><code>0o1230417
 </code></pre><h2 id="floating-numbers">Floating Numbers</h2>
-<p>Floating numbers <strong>must</strong> start with atleast a digit, they <strong>cannot</strong> start
-with a decimal. Floating numbers consist of a sequence of digits, followed by
-a decimal, and another sequence of digits:</p>
-<pre><code>1.212341234         // CORRECT
-.123123             // WRONG
-1.12341234.2341234  // WRONG
+<p>Floating numbers <strong>must</strong> start with atleast a digit, they <strong>cannot</strong> start with a decimal. Floating numbers consist of a sequence of digits, followed by a decimal, and another sequence of digits:</p>
+<pre><code>1.212341234         // :)
+1.12341234.2341234  // Too many decimal places
+0.123123            // :)
+.123123             // Cannot start with a `.`!
 </code></pre><h3 id="floating-number-suffixes">Floating Number Suffixes</h3>
-<p>You may suffix a number with either <code>f</code>, <code>d</code>, or <code>q</code> respectively. Floating
-suffixes are used to assist the compiler with type-inference. The suffix <code>f</code>
-denotes a single-precision binary floating-point (32 bits). The suffix <code>d</code>
-denotes a double-precision binary floating-point (64 bits). Finally, the <code>q</code> suffix denotes a quadruple-precision binary floating-point (128 bits). </p>
+<p>You may suffix a number with either <code>f</code>, <code>d</code>, or <code>q</code> respectively. Floating suffixes are used to assist the compiler with type-inference. You can see what each suffix represents in the following code snippet: </p>
 <pre><code>a := 0.1f; // 32 bits
 b := 0.1d; // 64 bits
 c := 0.1q; // 128 bits
 </code></pre><h2 id="string-literals">String Literals</h2>
-<p>A string is denoted with two quotes <code>&quot;</code>. Currently, the compiler will eat 
-<em>anything</em> between the matching quotations:</p>
+<p>A string is denoted with two quotes <code>&quot;</code>. The compiler will eat <em>anything</em> between the matching quotations. The following string is UTF-8 encoded, and will store the length of the string:</p>
 <pre><code>a := &quot;this is my quote&quot;;
-</code></pre><p>Strings are UTF-8 encoded, which means the following is valid:</p>
-<pre><code>a := &quot;&#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;&quot;;
-</code></pre><h2 id="character-literals">Character Literals</h2>
-<p>A character is denoted with two single squotes <code>&apos;</code>. Character constants cannot
-be empty:</p>
-<pre><code>a := &apos;&apos;; // INVALID
-a := &apos; &apos;; // OK!
-</code></pre><p>Currently, a character will eat anything within the two single quotes, and can
-be escaped with two backslashes <code>\\</code> or a backslash followed by a tick <code>\&apos;</code>.</p>
+b := &quot;&#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;&quot;;
+</code></pre><h3 id="c-interoperability">C Interoperability</h3>
+<p>Strings in Ark are treated differently, we use Pascal Style strings where the length is stored alongside the string itself. In C, a string is a sequence of ASCII characters, terminated with a null terminator <code>\0</code>. For this behaviour in C, prefix a string literal with a lowercase <code>c</code>:</p>
+<pre><code>printf(c&quot;this is a c string&quot;);
+</code></pre><p>This will produce a pointer to a <code>u8</code> (unsigned char), rather than <code>string</code>.</p>
+<h2 id="character-literals">Character Literals</h2>
+<p>A character is denoted with two single squotes <code>&apos;</code>. Character constants cannot be empty:</p>
+<pre><code>a := &apos;&apos;; // Illegal
+a := &apos; &apos;; // Perfect
+</code></pre><p>Currently, a character will eat anything within the two single quotes, and can be escaped with two backslashes <code>\\</code> or a backslash followed by a tick <code>\&apos;</code>.</p>
 <h2 id="standard-form-numbers">Standard Form Numbers</h2>
-<p>Numbers can be in standard form, a standard form number is a number literal,
-followed by an upper or lowercase <code>e</code>, followed by another number literal.</p>
+<p>Numbers can be in standard form, a standard form number is a number literal, followed by an upper or lowercase <code>e</code>, followed by another number literal.</p>
 <pre><code>2e3     == 2000
 2E3     == 2000
 2000e-3 == 2

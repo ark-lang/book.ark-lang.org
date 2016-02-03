@@ -53,7 +53,7 @@
         data-chapter-title="Interfaces"
         data-filepath="interfaces.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -626,22 +626,17 @@
                     
                         <h1 id="interfaces">Interfaces</h1>
 <p><img src="Badge_Planned.svg" alt="Feature Planned"></p>
-<p>Interfaces are named collections of method signatures. In Ark, interfaces are implicit,
-which means that if something has the methods defined in an interface <code>A</code>, it will
-implicitly implement interface <code>A</code>. This allows for duck typing, or in
-other words: </p>
+<p>Interfaces are named collections of method signatures. In Ark, interfaces are implicit, which means that if something has the methods defined in an interface <code>A</code>, it will implicitly implement interface <code>A</code>.</p>
+<p>This follows the philosophy of duck typing:</p>
 <blockquote>
 <p>If it looks like a duck, and quacks like a duck, it&apos;s a duck&quot;</p>
 </blockquote>
-<p>The <code>interface</code> keyword, followed by a block that consists of method signatures
-will denote an interface. Method signatures defined in an interface do not 
-need to specify the <code>func</code> keyword.</p>
+<p>In other words, if you have an interface <code>A</code>, and a structure <code>B</code> where <code>B</code> contains all of the properties defined in interface <code>A</code>, that structure is <code>A</code>.</p>
 <pre><code>type Geometry interface {
     area() -&gt; f64;
     perimeter() -&gt; f64;
 };
-</code></pre><p>Now if we introduce some structures that implement the same methods in the interface
-we defined, they will implement <code>Geometry</code> implicitly.</p>
+</code></pre><p>Now if we introduce some structures that implement the same methods in the interface we defined, they will implement <code>Geometry</code> implicitly.</p>
 <pre><code>type Rectangle struct {
     width: f64,
     height: f64,
@@ -651,33 +646,30 @@ type Circle struct {
     radius: f64,
 };
 
-func (r: rect) area() -&gt; f64 {
+func (r: ^Rectangle) area() -&gt; f64 {
     return r.width * r.height;
 }
 
-func (r: rect) perimeter() -&gt; f64 {
+func (r: ^Rectangle) perimeter() -&gt; f64 {
     return (r.width * 2) * (r.height * 2);
 }
 
-// NOTE std::math::PI as of writing this doesn&apos;t exist
-// in this context it&apos;s more for an example sake
-// but I&apos;m sure you know what PI means in this context
-
-func (c: circle) area() -&gt; f64 {
-    return std::math::PI * c.radius * c.radius;
+func (c: ^Circle) area() -&gt; f64 {
+    return PI * c.radius * c.radius;
 }
 
-func (c: circle) perimeter() -&gt; f64 {
-    return 2 * std::math::PI * c.radius;
+func (c: ^Circle) perimeter() -&gt; f64 {
+    return 2 * PI * c.radius;
 }
 </code></pre><p>We can make a generic function that takes any type that implements our Geometry interface:</p>
 <pre><code>func calculate(g: Geometry) {
-    C::printf(&quot;area %f, perim %f \n&quot;, g.area(), g.perimeter());
+    C::printf(c&quot;area %f, perim %f \n&quot;, g.area(), g.perimeter());
 }
 
 func main() -&gt; int {
     r := Rect { 
-        width: 3, height: 4
+        width: 3, 
+        height: 4,
     };
 
     c := Circle {

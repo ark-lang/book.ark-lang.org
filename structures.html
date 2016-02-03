@@ -53,7 +53,7 @@
         data-chapter-title="Structures"
         data-filepath="structures.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,32 +625,25 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="structures">Structures</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>We can define a structure with the <code>struct</code> keyword, followed by a block that
-contains the structures members. Note that an anonymous <code>struct</code> is not a 
-declaration, thus it is not terminated with a semi-colon.</p>
+<p>We can define a structure with the <code>struct</code> keyword, followed by a block that contains the structures members. </p>
 <pre><code>// anonymous structure
 struct {
     d: int,
     g: int,
 }
-</code></pre><p>We can bind a structure to a variable like so. Note that the structure itself
-is not terminated with a semi-colon, but the variable declaration that is binding
-this type does. </p>
-<p>We can also have default values for a structure. Default values are set in a 
-similar fashion to variable declarations (name, colon, Type, assignment operator,
-expression).</p>
+</code></pre><p>You can specify default values for a structure. Default values are set in a  similar fashion to variable declarations (name, colon, Type, assignment operator, expression).</p>
 <pre><code>// bind structure to variable
 mut x: struct {
     a: int = 2,
     b: int,
 };
-</code></pre><p>The dot operator - <code>.</code> - allows us to access the members of a structure:</p>
+</code></pre><p>The dot operator <code>.</code> is used to access the members of a structure.</p>
 <pre><code>// x is the structure
 // a, b are the members
 x.a = 100;
 x.b = 100;
-</code></pre><p>We can define custom types by binding an anonymous structure to a named type:</p>
+</code></pre><h2 id="binding-structures">Binding Structures</h2>
+<p>A structure is a type, thus it can be bound to a name for reuse:</p>
 <pre><code>type Vector struct {
     x: f64,
     y: f64,
@@ -659,28 +652,7 @@ x.b = 100;
 v: Vector;
 v.x = 23;
 v.y = 32;
-</code></pre><h2 id="using-default-structure-values">Using Default Structure Values</h2>
-<p>There are two ways of using <code>default</code>. As an expression, or as a statement. The
-<code>default</code> expression takes a Type <code>T</code>. The <code>default</code> statement takes an <code>access</code>, e.g.
-a variable pointer, dereferenced pointer, structure member, array index, tuple index,
-and so on.</p>
-<h3 id="default-expression">Default Expression</h3>
-<p>In this case, we use the <code>default</code> expression, which takes the Type <code>int</code>. This will
-set <code>x</code> to the default value for an <code>int</code>, which is zero.</p>
-<pre><code>x: int = default(int);
-</code></pre><h3 id="default-statement">Default Statement</h3>
-<p>In order to use any default values specified in a structure, you must initialize
-a structure using the default statement:</p>
-<pre><code>type Person struct {
-    a: int = 0,
-    b: int = 0,
-};
-person: Person;
-default(person);
-</code></pre><p>The above will set the person variable to use the Person type&apos;s default values. If 
-we do not use the default statement on a structure, the structures members will not
-have their memory zeroed out, thus causing them to contain random values.</p>
-
+</code></pre>
                     
                     </section>
                 

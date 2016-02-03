@@ -53,7 +53,7 @@
         data-chapter-title="Function Receivers"
         data-filepath="function_receivers.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,56 +625,44 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="function-receivers">Function Receivers</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>You can specify the receivers of a function to make it exclusive to that particular
-type. This means that in order to call the function, you need an instance of the
-type that it wants in the receiver.</p>
-<p>Function receivers are specified in parenthesis <em>before</em> the functions identifier. A
-function receiver is an &quot;extra parameter&quot;, however the compiler will pass it to
-the function implicitly in code gen. This means that functions can be called with the
-dot operator.</p>
-<p>A function that has a receiver is a method, since it &quot;belongs&quot; to a type.</p>
+<p>You can specify the receivers of a function to make it exclusive to that particular type. This means that in order to call the function, you need an instance of the type that it wants in the receiver.</p>
+<p>Function receivers are specified in parenthesis <em>before</em> the functions identifier. A function receiver specifies a few things:</p>
+<ul>
+<li>the owner of the function</li>
+<li>what kind of instance it takes (pointer, copy, static)</li>
+</ul>
 <pre><code>type Foo struct {
     a: int,
 };
 
+// this takes a copy of Foo
 func (a: Foo) bar() {
-    // do stuff here
+    ...
+}
+
+// this takes a pointer of Foo
+// meaning any changes to a will
+// be reflected on the instance
+// that invoked the method
+func (a: ^Foo) bar() {
+    ...
+}
+
+// this is a static function
+// you do not need an instance of
+// a structure to call the function,
+// but rather the function is part of the type
+func (Foo) bar() {
+    ...
 }
 </code></pre><h2 id="calling-methods">Calling Methods</h2>
-<p>A method needs an instance of the function receiver in order to be called. It is
-called with the dot operator like so:</p>
+<p>A method (function with a receiver) needs an instance of the objects specified in the receiver. It is called using the dot operator:</p>
 <pre><code>foo: ^Foo;
 foo.bar();
-</code></pre><p>The <code>bar</code> function takes an instance of <code>Foo</code>, however it takes a copy of <code>Foo</code>,
-and not a pointer to it. This is an important detail, because <code>Foo</code> will be copied
-into the function, instead of a pointer to the structure.</p>
-<h3 id="passing-by-reference">Passing by Reference</h3>
-<p>We can easily pass a reference instead by changing the receiver to accept a pointer
-to Foo instead of a copy of Foo, thus making the code become:</p>
-<pre><code>type Foo struct {
-    a: int,
-};
-
-func (a: ^Foo) bar() {
-    // do stuff here
-}
-
-func main() -&gt; int {
-    foo: ^Foo = std::mem::alloc&lt;Foo&gt;();
-    defer std::mem::dealloc&lt;Foo&gt;(foo);
-    foo.bar();
-}
-</code></pre><h3 id="static-methods">Static Methods</h3>
-<p>Static methods can be defined by omitting the name of the receiver, which means <code>bar</code>
-would become the following:</p>
-<pre><code>func (Foo) bar() {
-    // do stuff here
-}
-</code></pre><p>However, static methods are called slightly differently. Instead of a dot operator,
-you use the double colon operator <code>::</code>. Also, you do not need an instance of the
-function receiver.</p>
+</code></pre><h3 id="calling-static-methods">Calling Static Methods</h3>
+<p>If a method is static, you use the double colon operator <code>::</code> instead of a dot, you do not need an instance of the structure that the method is owned by:</p>
 <pre><code>func main() -&gt; int {
+    // Foo is the type, not an instance
     Foo::bar();
 }
 </code></pre>

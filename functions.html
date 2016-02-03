@@ -53,7 +53,7 @@
         data-chapter-title="Functions"
         data-filepath="functions.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,111 +625,85 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="functions">Functions</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>Ark programs will have, at the least, one function; the main function.
-This is the entry point of the program, i.e. where the execution of the program
-will begin.</p>
+<p>You will have at least one function in your program, the <code>main</code> function. The main function is the entry point of your program, it <em>must</em> return an <code>int</code>.</p>
 <pre><code>func main() -&gt; int {
-    ...
+    return 0;
 }
 </code></pre><h2 id="declaring-functions">Declaring Functions</h2>
-<p>The <code>func</code> keyword, followed by the name of the function, a list of parameters, 
-an <em>optional</em> return value denotes a function signature. A function itself is
-a function signature, followed by a block. A pair of curly braces <code>{}</code> denote
-a block.</p>
-<pre><code>// &quot;func&quot; Iden &quot;(&quot; ParameterList &quot;)&quot; [ &quot;-&gt;&quot; Type ] Block;
-
-// optional return value!
-func do_stuff() {
-    // this returns nothing
+<p>Functions are defined with the <code>func</code> keyword, followed by an identifier, a parameter list, and a block:</p>
+<pre><code>func foo() {
+    ...
 }
-
-// return value!
-func foobar() -&gt; int {
-
-}
+</code></pre><p>This function does not return a type, and takes no parameters. It is called by specifiying the name of the function <code>foo</code>, followed by the parameters to pass (if any):</p>
+<pre><code>foo(); // no params, empty parenthesis!
 </code></pre><h2 id="function-parameters">Function Parameters</h2>
-<p>An identifier, followed by a colon and a Type denote a function parameter. Function
-parameters must go in the function signature, between the parenthesis after the
-functions identifier (name).</p>
-<pre><code>// Parameter = Iden &quot;:&quot; Type
-// ParameterList = { Parameter &quot;,&quot; }
-func print_value(a: int) {
-    // do stuff with a
-}
-</code></pre><p>As you can see, the syntax is almost like a variable. A parameter has a
-name, followed by a colon <code>:</code>, and a type. Yet there are differences. You 
-must specify the parameters type, and the parameter <strong>cannot</strong> have a 
-default value:</p>
-<pre><code>// note, these are examples that will ERROR!
-
-// default values!
-func add(a: int = 5, b: int = 5) { // ERROR!
+<p>Types are defined almost identically to a variable declaration. They must specify a type, i.e. the compiler will not allow inference. Parameters are specified in the parenthesis after the identifier of a function:</p>
+<pre><code>func print_value(a: int, b: int, c: int) {
     ...
 }
-
-// no types!
-func add(a, b) { // ERROR!
-    ...
+</code></pre><p>The mutability rule still applies here, these parameters are immutable and cannot be changed unless you specify so:</p>
+<pre><code>func do_stuff(mut a: int, b: int) {
+    a = 21; // :)
+    b = a; // :(
 }
 </code></pre><h2 id="function-return-types">Function Return Types</h2>
-<p>A function that has no return type specified will return nothing. The function in the
-example above returns an integer. An arrow operator <code>-&gt;</code> followed by the Type <code>T</code> to
-return specifies a return type.</p>
-<pre><code>// returns an integer
-func add(a: int) -&gt; int {
-    // return keyword specifies what to return from the function
+<p>A function that has no return type specified will return nothing. The function in the example above returns an integer. An arrow operator <code>-&gt;</code> followed by a Type denotes a function.</p>
+<pre><code>func add(a: int) -&gt; int {
+    // return keyword specifies what 
+    // to return from the function
     return a + 1;
 }
-</code></pre><h2 id="single-line-functions">Single Line Functions</h2>
-<p>We&apos;ve introduced some syntactic sugar for single line functions, instead of
-using two curly braces to denote a block, you can use the association 
-operator  <code>=&gt;</code>:</p>
-<pre><code>func add(a: int, b: int) -&gt; int =&gt; return a + b;
-</code></pre><h2 id="function-prototypes">Function Prototypes</h2>
-<p>Function prototypes are for interoperability with C. They help the Ark compiler
-know what types a function should take that you are calling to. It also acts
-as a &quot;dummy&quot; function so that the compiler knows that you aren&apos;t calling a 
-non-existent function.</p>
-<p>A function signature, followed by a semi-colon (instead of a block) will denote
-a function prototype:</p>
-<pre><code>func function_prototype() -&gt; int;
-func function_prototype_returns_nothing();
+</code></pre><p>We can also return other Types:</p>
+<pre><code>func foo() -&gt; SomeStructure {
+
+}
+
+func bar() -&gt; []int {
+
+}
+
+func baz() -&gt; ^SomeStructure {
+
+}
+
+func foobar() -&gt; (int, f64) {
+
+}
+</code></pre><h2 id="c-interop">C Interop</h2>
+<p>Ark is built in a way where you do not need to worry about defining functions before use, the compiler will know about all the functions you define. However, we still allow for defining a functions prototype for C interoperability. If you wish to use a function like <code>printf</code>, you can specify the prototype for it, so that the compiler knows what the functions arguments are and what it returns. It doesn&apos;t need to know about the implementation of the function itself.</p>
+<p>Note that Ark will allow you to specify variadic arguments with ellipses <code>...</code>, though this is not a feature that you can utilise in code, and is soley for C interop.</p>
+<pre><code>[c] func printf(fmt: str, ...) -&gt; int;
 </code></pre><h2 id="anonymous-functions">Anonymous Functions</h2>
-<p>Functions do not have to specify a name; these are anonymous functions, i.e.
-they are not bound to a name:</p>
-<pre><code>func do_stuff(fn: func(): int) {
+<p>Functions are a type, you can pass them to other functions. In cases where you do not want (or need) to define a function, you can pass an anonymous function like so:</p>
+<pre><code>// this takes a function that returns an integer
+// and no params
+func do_stuff(fn: func() -&gt; int) {
     C::printf(&quot;%d\n&quot;, fn());
 }
 
 func main() -&gt; int {
-    do_stuff(func(): int { return 123; });
+    // here we pass an anonymous function
+    // to be invoked by `do_stuff`
+    do_stuff(func() -&gt; int { return 123; });
     return 0;
 }
 </code></pre><p>As you can see, the first function took a function as a parameter. You can pass
-functions as first-class function pointers.This is useful when
+functions as first-class function pointers. This is useful when
 sorting lists, making callbacks, etc.</p>
 <h2 id="program-arguments">Program Arguments</h2>
-<p>If you need the arguments passed to your program, you can modify the main
-functions arguments to take the amount of arguments passed, and a pointer
-to the argument list:</p>
+<p>If you want to manipulate the arguments passed into your program at execution, you can specify the following parameters in your main function:</p>
 <pre><code>[c] func printf(fmt: str, ...);
 
 func main(argc: int, argv: ^str) -&gt; int {
     C::printf(&quot;%d %s\n&quot;, argc, ^argv);
-
     return 0;
 }
 </code></pre><h2 id="variadic-functions">Variadic Functions</h2>
-<p>A variadic function is a function that can take a variable amount of arguments.
-An ellipses at the end of parameter list denotes a variadic function.</p>
+<p>A variadic function is a function that can take a variable amount of arguments. An ellipses at the end of parameter list denotes a variadic function. <strong>Note that this is for interoperability in C, and cannot be used normally in code.</strong></p>
 <pre><code>func do_stuff(a: int, ...) {
 
 }
-</code></pre><p>The above example shows a function that takes a variable amount of arguments. Note 
-that this is for interoperability with C, for instance the <code>printf</code> function. 
-This means that there is no way that you can get the arguments in Ark.</p>
-
+</code></pre>
                     
                     </section>
                 

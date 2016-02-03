@@ -53,7 +53,7 @@
         data-chapter-title="Arrays"
         data-filepath="arrays.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,18 +625,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="arrays">Arrays</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>An array is a static collection of values that have a uniform type. Arrays are 
-denoted with square brackets, or &quot;blocks&quot;. Arrays are accessed using subscript
-notation. An arrays size should be known at compile-time, you can specify this
-in the initialiser by either setting the arrays initial values, and letting
-the compiler deduce the size of the array, or using the size
-initializer syntax:</p>
-<blockquote>
-<p>While this implemented, the syntax is currently being reviewed
-for change: <a href="https://github.com/ark-lang/rfcs/issues/16" target="_blank">RFC #17</a></p>
-</blockquote>
-<pre><code>a: []int = [0, 1, 2, 3, 4]; // size deduced, size in type is superfluous
+<p>An array is a static collection of values that have a uniform type. Arrays are  denoted with square brackets, or &quot;blocks&quot;. Arrays are accessed using subscript notation. An arrays size should be known at compile-time, you can specify this in the initialiser by either setting the arrays initial values, and letting the compiler deduce the size of the array, or using the size initializer syntax:</p>
+<pre><code>a: []int = [0, 1, 2, 3, 4]; // size inferred from initialize
+                            // size in the type is superfluous
 b: []int; // ERROR! no initial value, no size!
 mut c: [5]int; // compiler will zero out 5 contiguous slots of memory
 </code></pre><h2 id="accessing-array-values">Accessing Array Values</h2>
@@ -647,12 +638,15 @@ to retrieve.</p>
 <pre><code>d: int = a[2]; // subscript notation for access
 c[1] = a[2]; // and setting array values too
 </code></pre><h2 id="array-length">Array Length</h2>
-<p>To get the length of an array, use the hash symbol <code>#</code> followed by an array literal
-or an array binding. The array length operator will be an unsigned integer, so
-it should be stored as such.</p>
+<p>To get the length of an array, use the len builtin <code>len</code> followed by an array literal or an array binding. The array length operator will be an unsigned integer, so it should be stored as such.</p>
 <pre><code>some_array := [0, 1, 2, 3];
-x: uint = #[0, 1, 2, 3]; // stores 4
-y: uint = #some_array;
+x: uint = len([0, 1, 2, 3]); // stores 4
+y: uint = len(some_array);
+
+mut i: uint = 0;
+for i &lt; y {
+    i += 1;
+}
 </code></pre><h2 id="bounds-checking">Bounds Checking</h2>
 <p>Ark does some simple bounds checking for arrays, a segmentation fault will be
 generated if you go out of the bounds of an array.</p>

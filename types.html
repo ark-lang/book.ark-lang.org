@@ -53,7 +53,7 @@
         data-chapter-title="Types"
         data-filepath="types.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,12 +625,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="types">Types</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>There are many primitive types in Ark, as well as structures that allow you to
-define custom types in the language, and binding a type to a name.</p>
+<p>There are many primitive types in Ark, as well as structures that allow you to define custom types in the language, and binding a type to a name.</p>
 <h2 id="general-purpose-types">General Purpose Types</h2>
-<p>These are the more general purpose types that we suggest you use for maximum
-portability.</p>
+<p>These are the more general purpose types that we suggest you use for portability.</p>
 <table>
 <thead>
 <tr>
@@ -653,7 +650,7 @@ portability.</p>
 </tr>
 <tr>
 <td>rune</td>
-<td>signed 32 bits, used for holding a Unicode codepoint</td>
+<td>signed 32 bits, used for Unicode codepoint</td>
 </tr>
 <tr>
 <td>string</td>
@@ -734,7 +731,7 @@ a little bit more control, or you need to worry about how much memory you use.</
 which contain the value to cast: <code>T(E)</code>, where T is the Type, and E is the
 expression to cast.</p>
 <pre><code>x: int = int(4.5); // becomes 4
-</code></pre><p>Variables can also be casted:</p>
+</code></pre><p>Variables can also be cast, or any expression for that matter:</p>
 <pre><code>y: f64 = 4.5;
 x: int = int(y);
 </code></pre>

@@ -53,7 +53,7 @@
         data-chapter-title="Enums"
         data-filepath="enums.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,7 +625,6 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="tagged-unions">Tagged Unions</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
 <p>An enum in Ark is what some may refer to as a tagged union, this allows for
 multiple variants: with no data, with named (tagged) data,
 and variants with unnamed data (anonymous data).</p>
@@ -669,9 +668,9 @@ func main() -&gt; int {
     z := Tree::Node{left: &amp;x, right: &amp;y};
 
     // print out the tree contents.
-    C::printf(&quot;Leaf-tag: %d\n&quot;, x);
-    C::printf(&quot;Leaf-tag: %d\n&quot;, y);
-    C::printf(&quot;Node-tag: %d\n&quot;, z);
+    C::printf(c&quot;Leaf-tag: %d\n&quot;, x);
+    C::printf(c&quot;Leaf-tag: %d\n&quot;, y);
+    C::printf(c&quot;Node-tag: %d\n&quot;, z);
     return 0;
 }
 </code></pre>

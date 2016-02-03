@@ -53,7 +53,7 @@
         data-chapter-title="Tuples"
         data-filepath="tuples.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,30 +625,21 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="tuple">Tuple</h1>
-<p><img src="Badge_Implemented.svg" alt="Feature Implemented"></p>
-<p>A tuple is a collection of values that can have irregular types. Tuples are similar
-to an array, though an array is a collection of values in which their types are
-uniform with one and another.</p>
-<p>Two parenthesis that contain types separated by commas will denote a tuple type. A
-tuple expression is like a tuple type, but instead of specifying the type
-in the parenthesis, you specify the values instead. A tuple expression should have
-the values specified in the same order that the type expects:</p>
-<pre><code>a: (int, f64) = (1, 2.3);
+<p>A tuple is a collection of values that can have irregular types:</p>
+<pre><code>// a takes a tuple that must contain an int and a f64
+a: (int, f64) = (1, 2.3);
 
 // here we expect an int and a float, but we get
 // a float and an int
 b: (int, f64) = (2.3, 1); // ERROR!
 
+// we can have as many values as we need
 c: (int, f64, f64, f64, int) = (1, 2.3, 3.2, 4.1, 6);
 </code></pre><h2 id="accessing-tuple-values">Accessing Tuple Values</h2>
-<p>Pipe operators denote tuple access. For instance, to access the values in a tuple
-<code>x</code>, we write <code>x|n|</code> where <code>n</code> is the index of the item to access in the tuple.</p>
-<blockquote>
-<p>this syntax is under review</p>
-</blockquote>
+<p>Pipe operators denote tuple access. For instance, to access the values in a tuple <code>x</code>, we write <code>x|n|</code> where <code>n</code> is the index of the item to access in the tuple.</p>
 <pre><code>a: (int, f64) = (1, 2.3);
-y := a|0|;
-z := a|1|;
+y := a|0|; // 1
+z := a|1|; // 2.3
 </code></pre>
                     
                     </section>

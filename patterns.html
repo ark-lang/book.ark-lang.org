@@ -53,7 +53,7 @@
         data-chapter-title="Patterns"
         data-filepath="patterns.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -633,8 +633,8 @@ to 4. An inclusive range is denoted with two dots and an equals symbol, e.g.
 <h2 id="multiple-values">Multiple Values</h2>
 <p>Multiple values can be matched using commas:</p>
 <pre><code>match x {
-    1, 2 =&gt; ...; // both 1 and 2
-    _ =&gt; ...; // everything else
+    1, 2 -&gt; ...; // both 1 and 2
+    _ -&gt; ...; // everything else
 }
 </code></pre><h2 id="underscore">Underscore</h2>
 <p>The underscore <code>_</code> is a &quot;default&quot; match, in other words, it matches anything
@@ -643,11 +643,15 @@ that isn&apos;t covered in the other arms.</p>
 <p>If we directly match something, like the return value from a function, we
 can bind it in the arm instead of re-evaluating the expression or binding it
 beforehand:</p>
-<pre><code>func age() -&gt; s32 =&gt; return 17;
+<pre><code>func age() -&gt; s32 {
+    return 17;    
+}
 
-match age() {
-    age @ 17 =&gt; println(&quot;felix&apos;s age is %d&quot;, age);
-    age =&gt; println(&quot;vedant&apos;s age is &quot;, age);
+func foo() {
+    match age() {
+        age @ 17 =&gt; println(&quot;felix&apos;s age is %d&quot;, age);
+        age =&gt; println(&quot;vedant&apos;s age is &quot;, age);
+    }
 }
 </code></pre>
                     

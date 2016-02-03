@@ -53,7 +53,7 @@
         data-chapter-title="Program Input"
         data-filepath="source.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -630,47 +630,26 @@ program input to the Ark compiler. A source program is interpreted as a
 sequence of Unicode code points encoded in UTF-8. Multiple source programs or <em>
 sources</em> can be fed to the compiler, note that this strongly ties in with the 
 module system. </p>
+<h2 id="compiler-phases">Compiler Phases</h2>
+<p>A source program is fed to the compiler as a sequence of UTF-8 encoded unicode code points, which are in turn tokenized by the lexical analyzer into a stream of tokens. These tokens are then parsed into a parse tree by the parser, and then into an Abstract Syntax Tree, abbreviated AST, by the constructor. After construction, the compiler will do various checks: resolution, type inference, and semantic analysis. Finally the AST is fed into the code generator, which will build an LLVM IR, and then the specified output is produced, which is an executable by default.</p>
 <h2 id="arguments">Arguments</h2>
-<p>The ark compiler is invoked typically through a command line interface (CLI),
-with the &quot;ark&quot; command -- assuming that the ark binary is in your $PATH. </p>
+<p>The ark compiler is invoked typically through a command line interface (CLI), with the &quot;ark&quot; command -- assuming that the ark binary is in your $PATH. </p>
 <h2 id="sub-commands">Sub Commands</h2>
-<p>The compiler allows for various sub-commands, sub-commands proceed the initial
-ark command, e.g. <code>ark &lt;sub-command&gt;</code>. For instance <code>ark build</code> will invoke
-the build sub-command.</p>
+<p>The compiler allows for various sub-commands, sub-commands proceed the initial ark command, e.g. <code>ark &lt;sub-command&gt;</code>. For instance <code>ark build</code> will invoke the build sub-command.</p>
 <h3 id="build-subcommand"><code>build</code> sub-command</h3>
-<p>This will run <em>all</em> checks on the given source program, producing a binary by
-default with the output name <code>main</code>.</p>
+<p>This will run <em>all</em> checks on the given source program, producing a binary by default with the output name <code>main</code>.</p>
 <h4 id="build-arguments"><code>build</code> arguments</h4>
 <p>These arguments are only allowed for the <code>build</code> sub-command.</p>
-<p>NOTE: the character specified in the parenthesis after the
-command is the short-flag, i.e. a shorthand flag for specifying
-the argument.</p>
-<p>Arguments <strong>must</strong> be prefixed with the double-dash, for example
-<code>--argument</code>, short arguments use a single dash, e.g. <code>-a</code>.</p>
+<p>NOTE: the character specified in the parenthesis after the command is the short-flag, i.e. a shorthand flag for specifying the argument.</p>
+<p>Arguments <strong>must</strong> be prefixed with the double-dash, for example <code>--argument</code>, short arguments use a single dash, e.g. <code>-a</code>.</p>
 <h5 id="output-o"><code>output</code> (<code>o</code>)</h5>
-<p>This argument takes a string that specifies the name of the produced
-binary. For example <code>ark build ... --output=&quot;foo&quot;</code> will produce a binary
-named &quot;foo&quot;.</p>
-<h5 id="codegen"><code>codegen</code></h5>
-<p>This argument allows for multiple choice strings, you are currently given the 
-option to codegen to:</p>
-<ul>
-<li>llvm</li>
-</ul>
-<p>Setting this argument will generate code for the given target. For instance,
-<code>ark build ... --codegen=&quot;llvm&quot;</code> will generate code using the LLVM framework.</p>
+<p>This argument takes a string that specifies the name of the produced binary. For example <code>ark build ... --output=&quot;foo&quot;</code> will produce a binary named &quot;foo&quot;.</p>
 <h5 id="static"><code>static</code></h5>
-<p>This is a <em>boolean</em> flag, which means that if you specify this flag, it will
-toggle a behaviour in Ark. Specifically, this argument will pass the <code>-static</code>
-option to <code>cc</code>, e.g. <code>ark build ... --static</code>.</p>
+<p>This is a <em>boolean</em> flag, which means that if you specify this flag, it will toggle a behaviour in Ark. Specifically, this argument will pass the <code>-static</code> option to <code>cc</code>, e.g. <code>ark build ... --static</code>.</p>
 <h5 id="run"><code>run</code></h5>
-<p>The <code>run</code> argument will run the binary after creating it, e.g. 
-<code>ark build ... --run</code>. This is a boolean flag, therefore it takes no
-parameters. By default, this is false, i.e. it will not run the code 
-after compilation.</p>
+<p>The <code>run</code> argument will run the binary after creating it, e.g.  <code>ark build ... --run</code>. This is a boolean flag, therefore it takes no parameters. By default, this is false, i.e. it will not run the code after compilation.</p>
 <h5 id="outputtype"><code>output-type</code></h5>
-<p>This argument will set the output-type, i.e. the format to produce after
-generating code, the options are:</p>
+<p>This argument will set the output-type, i.e. the format to produce after generating code, the options are:</p>
 <ul>
 <li><code>executable</code> =&gt; an executable for your platform</li>
 <li><code>assembly</code> =&gt; assembly code for your platform</li>
@@ -678,33 +657,9 @@ generating code, the options are:</p>
 <li><code>llvm-ir</code> =&gt; llvm intermediate representation</li>
 <li><code>llvm-bc</code> =&gt; llvm bitcode</li>
 </ul>
-<p>An example of usage would be: <code>ark build ... --output-type=&quot;assembly&quot;</code>. The
-default output type is an &quot;executable&quot;.</p>
+<p>An example of usage would be: <code>ark build ... --output-type=&quot;assembly&quot;</code>. The default output type is an &quot;executable&quot;.</p>
 <h5 id="optlevel-o"><code>opt-level</code> (<code>O</code>)</h5>
-<p>This argument sets the optimization level for LLVM, it takes an integer
-parameter from <code>0</code> to <code>4</code>, e.g. <code>ark build ... -opt-level=0</code>.</p>
-<h5 id="ownership"><code>ownership</code></h5>
-<p>This is a <em>temporary</em> boolean flag, which will enforce ownership/borrow
-checks on the source code, e.g. <code>ark build ... --ownership</code>.</p>
-<h4 id="compiler-phases">Compiler Phases</h4>
-<p>A source program is fed to the compiler as a sequence of UTF-8 encoded unicode 
-code points, which are in turn tokenized by the lexical analyzer into a stream
-of tokens. These tokens are then parsed into a parse tree by the parser, and
-then into an Abstract Syntax Tree, abbreviated AST, by the <strong>constructor</strong>.
-After construction, the compiler will do various checks: resolution, type
-inference, and semantic analysis. Finally the AST is fed into the code
-generator, which will produce LLVM IR.</p>
-<h3 id="docgen"><code>docgen</code></h3>
-<p>This sub-command will do the documentation generation, which will execute the 
-scan, lex, parse, and construction phases, however it <em>skips</em> code generation.
-Instead, it will generate documentation in the form of HTML (i.e. a website).</p>
-<h4 id="docgen-arguments"><code>docgen</code> arguments</h4>
-<p>These arguments are only allowed for the <code>docgen</code> sub-command.</p>
-<h5 id="dir"><code>dir</code></h5>
-<p>This argument specifies the output directory for the generated documentation.
-By default, the generated documentation will go in a <code>docgen/</code> folder. Example
-usage of this argument would be: <code>ark docgen ... --dir=&quot;docs&quot;</code>. In this case,
-we place the generated documentation into a directory named &quot;docs&quot;.</p>
+<p>This argument sets the optimization level for LLVM, it takes an integer parameter from <code>0</code> to <code>4</code>, e.g. <code>ark build ... -opt-level=0</code>.</p>
 
                     
                     </section>

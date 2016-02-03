@@ -53,7 +53,7 @@
         data-chapter-title="Identifiers"
         data-filepath="identifiers.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,8 +625,9 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="identifiers">Identifiers</h1>
-<p>An identifier is a sequence of Unicode code points encoded in UTF-8. An
-identifier can consist of letters, digits, or underscores. However, the
+<p>An identifier is a sequence of Unicode code points encoded in
+UTF-8. An identifier can consist of letters, digits, or
+underscores. However, the
 identifeir <strong>must</strong> begin with either a letter, or an underscore.</p>
 <pre><code>func 1something...          // INVALID!
 func _something...          // VALID
@@ -634,9 +635,11 @@ func __something...         // VALID
 func 21something...         // INVALID!
 func foo_bar...             // VALID
 func __some_123123_th...    // VALID
-</code></pre><p>UTF-8 Letters are <em>allowed</em>, this means that the following identifier is
-valid:</p>
-<pre><code>func &#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;() =&gt; do_stuff(1, 2);
+</code></pre><p>UTF-8 Letters are <em>allowed</em>, this means that the following 
+identifier is valid:</p>
+<pre><code>func &#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;() {
+    ...
+}
 </code></pre><p>And can be called like so:</p>
 <pre><code>&#x65E5;&#x672C;&#x8A9E;&#x3066;&#x3059;&#x3068;();
 </code></pre>

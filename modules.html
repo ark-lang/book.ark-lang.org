@@ -53,7 +53,7 @@
         data-chapter-title="Modules and Dependencies"
         data-filepath="modules.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,70 +625,55 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="modules">Modules</h1>
-<p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
-<blockquote>
-<p>This is under debate, check out the <a href="https://github.com/ark-lang/rfcs/issues/3" target="_blank">RFC #3</a>
-for modules to help.</p>
-</blockquote>
-<p>Modules can be in two forms, a file, or a directory. Consider the
-following structure:</p>
-<pre><code>    - main.ark
-    - entities/
-        - entity.ark
-        - player.ark
+<p>Modules can be in two forms, a file, or a directory. The following folder structure will be assumed in the examples present in this document:</p>
+<pre><code>    src/
+        - main.ark
+        - entities/
+            - entity.ark
+            - player.ark
+            - dog.ark
         - mob/
             - slime.ark
 </code></pre><p>All of the ark files are modules, all of the directories are modules. If a file
-is inside of a directory, we refer to it as a sub-directory, however this is more
-for the sake of simplicity.</p>
-<p>Ark will determine the name of the module based on the files name and the directory
-it is a child of.</p>
-<h2 id="module-access">Module Access</h2>
-<p>A module is accessed using the <code>mod</code> statement. If the module is a directory,
-all of the children will be used. If the module is a file, all of the modules
-contents will be used.</p>
-<p>Functions and other members of the module being used are accessed with the 
-double colon operator <code>::</code>.</p>
-<pre><code>mod entities;
-
-func main() -&gt; int {
-    player: ^entities::player::Player = entities::player::new();
-    return 0;
+is inside of a directory, we refer to it as a sub-module, this is for being explicit.</p>
+<p>Ark will determine the name of the module based on the files name and the directory it is a child of. When using this system, you only need to specify where the entry point of the program is, i.e. where the <code>main</code> function lies.</p>
+<h2 id="using-modules">Using Modules</h2>
+<p>When using a module, all of the files inside of the module will be used too. You can selectively use only certain files in a module:</p>
+<pre><code>#use entities // imports player, dog, and entity
+#use entities::{player} // only import player
+#use entities::{player, dog} // only import player and dog
+</code></pre><h2 id="access-specifiers">Access Specifiers</h2>
+<p>By default <em>all</em> declarations inside of a module are private. You need to specify they can be publicly used with the <code>pub</code> keyword:</p>
+<pre><code>// this can be invoked outside of the module
+pub func foo() {
+    ...
 }
-</code></pre><p>Of course, that gets a bit tedious. So we can use just the <code>player</code> module:</p>
-<pre><code>mod entities::player;
 
-func main() -&gt; int {
-    player: ^player::Player = player::Player::new();
-    return 0;
+// this structure can be used outside of the module
+pub type Blah struct {
+    ...
 }
-</code></pre><h3 id="implicit-modules">Implicit Modules</h3>
-<p>When you have a lot of nested modules, things can get a bit messy. To inject
-modules into scope (which is not advised), you can specify multiple modules
-to inject, or to inject all modules. This means you do not have to specify
-the module that is being accessed:</p>
-<pre><code>mod entities::mob::*; // injects all children of the mob module
-// don&apos;t use both obviously...
-// mod entities::mob::{slime, cat}; // injects selected children of mob module
+</code></pre><h2 id="using-module-values">Using Module Values</h2>
+<p>Assuming we had the following inside of <code>dog.ark</code>:</p>
+<pre><code>pub type Dog struct {
+    name: string,
+    age: uint,
+};
 
-func main() -&gt; int {
-    slime: ^Slime = Slime::new();
+pub func (d: ^Dog) age() -&gt; uint {
+    return d.age;
 }
-</code></pre><h2 id="dependencies">Dependencies</h2>
-<p>Dependencies will be located in a <code>_deps</code> directory. This will be in the root
-of your project. The compiler will search for the <code>_deps</code> directory in the
-current directory, and keep going up a directory till it finds a <code>_deps</code> folder.</p>
-<p>Dependencies are used almost identically to modules, however you use the <code>dep</code>
-keyword instead of a <code>mod</code> keyword. For instance:</p>
-<pre><code>dep mysql;
+</code></pre><p>We can instantiate a new Dog like so:</p>
+<pre><code>#use entities
 
-func main() -&gt; int {
-    connection: ^mysql::Connection = mysql::connect(...);
-    defer connection.close();
+pub func main() {
+    billy: ^entities::Dog = entities::Dog {
+        name: &quot;Billy&quot;,
+        age: 31,
+    };
+    billy.age();
 }
-</code></pre><p>You can also tell the compiler where your <code>_deps</code> directory is located explicitly
-using the <code>--deps</code> flag, e.g. <code>--deps=../../_deps</code>.</p>
-
+</code></pre>
                     
                     </section>
                 

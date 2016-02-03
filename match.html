@@ -53,7 +53,7 @@
         data-chapter-title="Match"
         data-filepath="match.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,30 +625,29 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="match">Match</h1>
-<p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
 <p>Match is a control structure that takes an expression and will branch based
 on its value. A match is denoted with the <code>match</code> keyword, followed by the
 expression, and a block of conditions to check, or &quot;arms&quot;. An arm is of the
-form <code>val =&gt; expr</code>, and must be terminated with a semi-colon. 
+form <code>val -&gt; expr</code>, and must be terminated with a semi-colon. 
 When the value matches the given expression, that arms expression will be 
 evaluated. Note that you can either have a single expression, or you can 
 insert a block and have a group of them:</p>
 <pre><code>match x {
-    1 =&gt; ...;
-    2 =&gt; ...;
-    3 =&gt; ...;
-    4 =&gt; {
+    1 -&gt; ...,
+    2 -&gt; ...,
+    3 -&gt; ...,
+    4 -&gt; {
         ...;
         ...;
         ...;
-    };
+    },
 }
 </code></pre><p>A match must have at least one arm, this arm is &quot;fallback&quot; arm; i.e. when none
 of the arms match the given expression, it will evaluate whatever is in
 that arm. The &quot;fallback&quot; arm matches the pattern <code>_</code>:</p>
 <pre><code>match x {
-    1 =&gt; ...; // if it&apos; 1, do this
-    _ =&gt; ...; // do this if it&apos;s anything other than 1
+    1 -&gt; ..., // if it&apos; 1, do this
+    _ -&gt; ..., // do this if it&apos;s anything other than 1
 }
 </code></pre>
                     

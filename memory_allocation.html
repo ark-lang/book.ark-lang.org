@@ -53,7 +53,7 @@
         data-chapter-title="Memory Allocation"
         data-filepath="memory_allocation.md"
         data-basepath="."
-        data-revision="Mon Feb 01 2016 00:37:44 GMT+0000 (GMT)"
+        data-revision="Wed Feb 03 2016 20:02:54 GMT+0000 (GMT)"
         data-innerlanguage="">
     
 
@@ -625,34 +625,26 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="memory-allocation">Memory Allocation</h1>
-<p><img src="Badge_InProgress.svg" alt="Feature In Progress"></p>
 <p>Memory allocation is handled in the standard library, there are a few functions
 used for allocating memory, namely <code>alloc</code>, <code>alloc_raw</code>, <code>sizeof</code>, and <code>dealloc</code>.</p>
-<h2 id="alloc"><code>alloc</code></h2>
-<p>The <code>alloc</code> function takes a generic type <code>T</code>, and no arguments This function
+<p>To use the functions defined in the memory standard library, make sure you import the <code>mem</code> module:</p>
+<pre><code>#use std::mem
+</code></pre><h2 id="alloc"><code>alloc</code></h2>
+<p>The <code>alloc</code> function takes a generic type <code>T</code>, and no arguments. This function
 will allocate enough memory to store the size of the generic type you pass in.
 The <code>alloc</code> function returns a pointer to the memory block that it allocates as the type <code>T</code>.</p>
-<pre><code>foo: ^int = std::mem::alloc&lt;int&gt;();
+<pre><code>foo: ^int = mem::alloc&lt;int&gt;();
 </code></pre><h2 id="allocraw"><code>alloc_raw</code></h2>
-<p>The <code>alloc_raw</code> function will allocate raw memory, it takes the amount of memory to
-allocate as an unsigned integer. Like the <code>alloc</code> function, the <code>alloc_raw</code> function
-will also return a pointer of bytes to the memory block that it allocates.</p>
-<pre><code>foo: ^u8 = std::mem::alloc_raw(256);
+<p>The <code>alloc_raw</code> function will allocate raw memory, it takes the amount of memory to allocate as an unsigned integer. Like the <code>alloc</code> function, the <code>alloc_raw</code> function will also return a pointer of bytes to the memory block that it allocates.</p>
+<pre><code>foo: ^u8 = mem::alloc_raw(256);
 </code></pre><h2 id="sizeof"><code>sizeof</code></h2>
-<p><code>sizeof</code> is an expression that will get the size of the given type <code>T</code> or expression
-<code>E</code>. Since <code>alloc</code> handles memory allocation for types for you, we suggest not using
-this in pair with <code>alloc_raw</code>. However, it is available for when you need the size
-of an expression or type.</p>
-<pre><code>foo: ^u8 = std::mem::alloc(std::mem::sizeof(int) + std::mem::sizeof(f64));
-</code></pre><h2 id="dealloc"><code>dealloc</code></h2>
-<p><code>dealloc</code> will de-allocate the memory that is given to it, this must be called after
-allocating any memory, otherwise you will get a memory leak. Note that you should
-<em>not</em> use this on memory that isn&apos;t stored on the heap. The <code>dealloc</code> function takes
-a pointer to the memory that it should deallocate.</p>
-<pre><code>x: ^int = std::mem::alloc&lt;int&gt;();
-defer std::mem::dealloc(x);
-</code></pre><p>In the example above we defer, which means that at the end of scope, call dealloc on <code>x</code>. The defer expression is very handy with resource allocation.</p>
-
+<p><code>sizeof</code> is a builtin that will get the size of the given type <code>T</code> or expression <code>E</code>. Since <code>alloc</code> handles memory allocation for types for you, we suggest not using this in pair with <code>alloc_raw</code>. However, it is available for when you need the size of an expression or type.</p>
+<pre><code>foo: ^u8 = mem::alloc_raw(sizeof(int) + sizeof(f64));
+</code></pre><h2 id="free"><code>free</code></h2>
+<p><code>free</code> will de-allocate the memory at the given address, this must be called after allocating any memory, otherwise you will get a memory leak. Note that you should <em>not</em> use this on memory that isn&apos;t stored on the heap. The <code>free</code> function takes a pointer to the memory that it should deallocate.</p>
+<pre><code>x: ^int = mem::alloc&lt;int&gt;();
+mem::free&lt;int&gt;(x);
+</code></pre>
                     
                     </section>
                 
